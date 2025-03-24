@@ -48,14 +48,13 @@
         <div>
           <button class="display-favs">★ Voir mes favoris</button>
 
-          <select class="sorted-by">
-            <option selected="">Trier par:</option>
+          <label for="sort">Trier par :</label>
+          <select class="sorted-by" id="sort">
             <option value="popularity">Popularité</option>
             <option value="release-date">Date de Sortie</option>
             <option value="alphabetical">Ordre alphabetique</option>
           </select>
 
-          <br/>
           <br/>
           <br/>
 
@@ -74,6 +73,8 @@
               <label for="deux">Les Deux</label>
             </div>
           </fieldset>
+
+          <br/>
           
           <fieldset>
             <legend>Genre</legend>
