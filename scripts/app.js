@@ -3,11 +3,13 @@ import { fetchFilteredGames } from './api.js';
 
 
 const resultsContainer = document.getElementById('bloc-resultats');
+const favsButton = document.querySelector('.display-favs');
 const prevButton = document.createElement('button');
 const nextButton = document.createElement('button');
 let games = []; // Stocke tous les jeux récupérés
 let currentPage = 1;
 const gamesPerPage = 25; // Nombre de jeux par page
+let showingFavorites = false;
 
 // Création des boutons de navigation
 prevButton.innerText = "Précédent";
@@ -63,38 +65,112 @@ async function displayPopularGames() {
     const selectedGenre = getSelectedGenre();
     const selectedSort = getSelectedSort();
     games = await fetchFilteredGames(selectedPlatform, selectedGenre, selectedSort); // Récupère tous les jeux
+    showingFavorites = false;
     changePage(1); // Affiche la première page
 }
 
+function displayFavoriteGames() {
+    let favorites = JSON.parse(localStorage.getItem("favorites")) || { stores: [] };
+    const favoriteTitles = new Set(favorites.stores);
+
+    const favoriteGames = games.filter(game => favoriteTitles.has(game.title));
+    games = favoriteGames; // Update the displayed list
+    showingFavorites = true;
+    changePage(1);
+}
+
+// Toggle between all games and favorites
+favsButton.addEventListener("click", () => {
+    if (showingFavorites) {
+        displayPopularGames();
+        favsButton.innerText = "★ Voir mes favoris";
+    } else {
+        displayFavoriteGames();
+        favsButton.innerText = "☆ Retour aux jeux";
+    }
+});
+
 function changePage(page) {
     const totalPages = Math.ceil(games.length / gamesPerPage);
-    if (page < 1 || page > totalPages) return; // Empêche de dépasser les limites des pages
+    if (page < 1 || page > totalPages) return;
 
     currentPage = page;
-    resultsContainer.innerHTML = ''; // Vide l'ancien contenu
+    resultsContainer.innerHTML = '';
 
-    // Récupère les jeux à afficher pour la page actuelle
     const start = (currentPage - 1) * gamesPerPage;
     const end = start + gamesPerPage;
     const gamesToShow = games.slice(start, end);
 
-    // Crée et affiche les cartes de jeux
     gamesToShow.forEach(game => {
         const gameCard = document.createElement('div');
-    gameCard.classList.add('game-card');
+        gameCard.classList.add('game-card');
 
-// Crée un élément <a> qui redirige vers le lien du jeu
-const link = document.createElement('a');
-link.href = game.game_url; // Assure-toi que game_url contient l'URL du jeu
-link.target = "_blank"; // Ouvre le lien dans un nouvel onglet
+        const link = document.createElement('a');
+        link.href = game.game_url;
+        link.target = "_blank";
 
-// Ajoute le contenu de la carte à l'intérieur du lien
-link.innerHTML = `
-    <img src="${game.thumbnail}" alt="${game.title}" class="game-thumbnail">
-    <h3 class="game-title">${game.title}</h3>
-    <p class="game-genre">${game.genre}</p>
-`;
+        link.innerHTML = `
+            <img src="${game.thumbnail}" alt="${game.title}" class="game-thumbnail">
+            <h3 class="game-title">${game.title}</h3>
+            <p class="game-genre">${game.genre}</p>
+            <button class="addToFavBtn">☆</button>
+        `;
 
+        gameCard.appendChild(link);
+        resultsContainer.appendChild(gameCard);
+        ;
+        prevButton.style.display = currentPage > 1 ? "inline-block" : "none";
+    nextButton.style.display = currentPage < totalPages ? "inline-block" : "none";
+
+
+    document.addEventListener("DOMContentLoaded", () => {
+        let favorites = JSON.parse(localStorage.getItem("favorites")) || { stores: [] };
+
+        document.querySelectorAll(".addToFavBtn").forEach(button => {
+            const gameCard = button.closest(".game-card");
+            if (!gameCard) return;
+
+            const gameTitle = gameCard.querySelector(".game-title").innerText;
+
+            if (favorites.stores.includes(gameTitle)) {
+                button.innerText = "★"; // Set to filled star
+                button.classList.add("favorited"); // Apply styling
+            }
+        });
+    });
+
+   // Event listener for dynamically created "Add to Favorites" buttons
+   document.addEventListener("click", (event) => {
+    if (event.target.classList.contains("addToFavBtn")) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const gameCard = event.target.closest(".game-card"); 
+        if (!gameCard) return;
+
+        const gameTitle = gameCard.querySelector(".game-title").innerText; 
+
+        let favorites = JSON.parse(localStorage.getItem("favorites")) || { stores: [] };
+
+        const index = favorites.stores.indexOf(gameTitle);
+        if (index === -1) {
+            favorites.stores.push(gameTitle);
+            event.target.innerText = "★"; // Filled star
+            event.target.classList.add("favorited"); // Add styling
+            console.log(`"${gameTitle}" ajouté aux favoris !`);
+        } else {
+            favorites.stores.splice(index, 1);
+            event.target.innerText = "☆"; // Empty star
+            event.target.classList.remove("favorited"); // Remove styling
+            console.log(`"${gameTitle}" supprimé des favoris.`);
+        }
+
+        localStorage.setItem("favorites", JSON.stringify(favorites));
+    }
+    });
+
+
+    
 // Ajoute le lien contenant la carte de jeu à la div principale de la carte
 gameCard.appendChild(link);
 
