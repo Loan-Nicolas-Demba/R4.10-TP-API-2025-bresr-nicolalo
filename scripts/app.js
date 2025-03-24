@@ -90,12 +90,42 @@ favsButton.addEventListener("click", () => {
     }
 });
 
+// Toggle favorite status
+function toggleFavorite(gameTitle, favButton) {
+    let favorites = JSON.parse(localStorage.getItem("favorites")) || { stores: [] };
+    const index = favorites.stores.indexOf(gameTitle);
+
+    if (index === -1) {
+        // Add to favorites
+        favorites.stores.push(gameTitle);
+        favButton.innerText = "★"; // Set filled star
+        favButton.classList.add("favorited");
+        console.log(`"${gameTitle}" ajouté aux favoris !`);
+    } else {
+        // Remove from favorites
+        favorites.stores.splice(index, 1);
+        favButton.innerText = "☆"; // Set empty star
+        favButton.classList.remove("favorited");
+        console.log(`"${gameTitle}" supprimé des favoris.`);
+    }
+
+    // Update localStorage with the new state
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+}
+
+
+// Check if a game is favorited
+function isFavorited(gameTitle) {
+    const favorites = JSON.parse(localStorage.getItem("favorites")) || { stores: [] };
+    return favorites.stores.includes(gameTitle);
+}
+
 function changePage(page) {
     const totalPages = Math.ceil(games.length / gamesPerPage);
     if (page < 1 || page > totalPages) return;
 
     currentPage = page;
-    resultsContainer.innerHTML = '';
+    resultsContainer.innerHTML = ''; // Clear the previous results
 
     const start = (currentPage - 1) * gamesPerPage;
     const end = start + gamesPerPage;
@@ -109,17 +139,37 @@ function changePage(page) {
         link.href = game.game_url;
         link.target = "_blank";
 
+        // Create favorite button
+        const favButton = document.createElement("button");
+        favButton.classList.add("addToFavBtn");
+
+        // Set initial state for the favorite button
+        if (isFavorited(game.title)) {
+            favButton.innerText = "★"; // Filled star
+            favButton.classList.add("favorited");
+        } else {
+            favButton.innerText = "☆"; // Empty star
+            favButton.classList.remove("favorited");
+        }
+
+        favButton.addEventListener("click", (event) => {
+            event.preventDefault(); // Prevent link click
+            toggleFavorite(game.title, favButton);
+        });
+
         link.innerHTML = `
             <img src="${game.thumbnail}" alt="${game.title}" class="game-thumbnail">
             <h3 class="game-title">${game.title}</h3>
             <p class="game-genre">${game.genre}</p>
-            <button class="addToFavBtn">☆</button>
         `;
 
         gameCard.appendChild(link);
+        gameCard.appendChild(favButton); // Add favorite button outside <a>
+
         resultsContainer.appendChild(gameCard);
-        ;
-        prevButton.style.display = currentPage > 1 ? "inline-block" : "none";
+    ;
+
+    prevButton.style.display = currentPage > 1 ? "inline-block" : "none";
     nextButton.style.display = currentPage < totalPages ? "inline-block" : "none";
 
 
@@ -202,6 +252,32 @@ resultsContainer.appendChild(gameCard);
     prevButton.style.display = currentPage > 1 ? "inline-block" : "none";
     nextButton.style.display = currentPage < totalPages ? "inline-block" : "none";
 }
+resultsContainer.addEventListener("click", (event) => {
+    if (event.target.classList.contains("addToFavBtn")) {
+        event.preventDefault(); 
+        const gameCard = event.target.closest(".game-card"); 
+        if (!gameCard) return;
+
+        const gameTitle = gameCard.querySelector(".game-title").innerText; 
+
+        let favorites = JSON.parse(localStorage.getItem("favorites")) || { stores: [] };
+
+        const index = favorites.stores.indexOf(gameTitle);
+        if (index === -1) {
+            favorites.stores.push(gameTitle);
+            event.target.innerText = "★"; 
+            event.target.classList.add("favorited"); 
+            console.log(`"${gameTitle}" ajouté aux favoris !`);
+        } else {
+            favorites.stores.splice(index, 1);
+            event.target.innerText = "☆"; 
+            event.target.classList.remove("favorited"); 
+            console.log(`"${gameTitle}" supprimé des favoris.`);
+        }
+
+        localStorage.setItem("favorites", JSON.stringify(favorites));
+    }
+});
 
 
 
