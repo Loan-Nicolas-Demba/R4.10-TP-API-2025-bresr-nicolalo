@@ -1,44 +1,7 @@
 const API_URL = "https://www.freetogame.com/api";
 const PROXY_URL = "https://api.allorigins.win/get?url=";
 
-// Fonction pour récupérer les jeux populaires
-export async function fetchPopularGames() {
-    try {
-        const response = await fetch(`${PROXY_URL}${encodeURIComponent(`${API_URL}/games?sort-by=popularity`)}`);
-        if (!response.ok) throw new Error("Erreur API");
-        const data = await response.json(); 
-        return JSON.parse(data.contents);
-    } catch (error) {
-        console.error("Erreur API:", error);
-        return [];
-    }
-}
 
-// Fonction pour récupérer les jeux populaires
-export async function fetchReleaseGames() {
-    try {
-        const response = await fetch(`${PROXY_URL}${encodeURIComponent(`${API_URL}/games?sort-by=release-date`)}`);
-        if (!response.ok) throw new Error("Erreur API");
-        const data = await response.json(); 
-        return JSON.parse(data.contents);
-    } catch (error) {
-        console.error("Erreur API:", error);
-        return [];
-    }
-}
-
-// Fonction pour récupérer les jeux populaires
-export async function fetchAlphabeticalGames() {
-    try {
-        const response = await fetch(`${PROXY_URL}${encodeURIComponent(`${API_URL}/games?sort-by=alphabetical`)}`);
-        if (!response.ok) throw new Error("Erreur API");
-        const data = await response.json(); 
-        return JSON.parse(data.contents);
-    } catch (error) {
-        console.error("Erreur API:", error);
-        return [];
-    }
-}
 
 
 // Fonction pour faire la requête à l'API avec les filtres

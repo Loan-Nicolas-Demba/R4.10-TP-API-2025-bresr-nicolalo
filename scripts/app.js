@@ -1,8 +1,8 @@
-import { fetchPopularGames } from './api.js';
 import { fetchFilteredGames } from './api.js';
 
 
 const resultsContainer = document.getElementById('bloc-resultats');
+const loadingGif = document.getElementById("loading-gif");
 const favsButton = document.querySelector('.display-favs');
 const prevButton = document.createElement('button');
 const nextButton = document.createElement('button');
@@ -73,14 +73,28 @@ function getSelectedSort() {
 
 
 async function displayPopularGames() {
+
     const selectedPlatform = getSelectedPlatform();
     const selectedGenre = getSelectedGenre();
     const selectedSort = getSelectedSort();
     const selectedTags = getSelectedTags();
 
-    games = await fetchFilteredGames(selectedPlatform, selectedGenre, selectedTags, selectedSort); // Récupère tous les jeux
-    showingFavorites = false;
-    changePage(1); // Affiche la première page
+    loadingGif.style.display = "block";
+    resultsContainer.innerHTML = ""; 
+
+    try {
+        games = await fetchFilteredGames(selectedPlatform, selectedGenre, selectedTags, selectedSort); // Récupère tous les jeux
+        showingFavorites = false;
+        resultsContainer.innerHTML = ""; 
+
+        changePage(1); // Affiche la première page
+
+    } catch (error) {
+        console.error("Erreur lors de", error);
+    } finally {
+        loadingGif.style.display = "none";
+    }
+
 }
 
 function displayFavoriteGames() {
