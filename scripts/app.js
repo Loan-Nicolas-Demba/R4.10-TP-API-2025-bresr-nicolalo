@@ -189,35 +189,6 @@ function changePage(page) {
         });
     });
 
-   // Event listener for dynamically created "Add to Favorites" buttons
-   document.addEventListener("click", (event) => {
-    if (event.target.classList.contains("addToFavBtn")) {
-        event.preventDefault();
-        event.stopPropagation();
-
-        const gameCard = event.target.closest(".game-card"); 
-        if (!gameCard) return;
-
-        const gameTitle = gameCard.querySelector(".game-title").innerText; 
-
-        let favorites = JSON.parse(localStorage.getItem("favorites")) || { stores: [] };
-
-        const index = favorites.stores.indexOf(gameTitle);
-        if (index === -1) {
-            favorites.stores.push(gameTitle);
-            event.target.innerText = "★"; // Filled star
-            event.target.classList.add("favorited"); // Add styling
-            console.log(`"${gameTitle}" ajouté aux favoris !`);
-        } else {
-            favorites.stores.splice(index, 1);
-            event.target.innerText = "☆"; // Empty star
-            event.target.classList.remove("favorited"); // Remove styling
-            console.log(`"${gameTitle}" supprimé des favoris.`);
-        }
-
-        localStorage.setItem("favorites", JSON.stringify(favorites));
-    }
-    });
 
 
     
@@ -252,32 +223,7 @@ resultsContainer.appendChild(gameCard);
     prevButton.style.display = currentPage > 1 ? "inline-block" : "none";
     nextButton.style.display = currentPage < totalPages ? "inline-block" : "none";
 }
-resultsContainer.addEventListener("click", (event) => {
-    if (event.target.classList.contains("addToFavBtn")) {
-        event.preventDefault(); 
-        const gameCard = event.target.closest(".game-card"); 
-        if (!gameCard) return;
 
-        const gameTitle = gameCard.querySelector(".game-title").innerText; 
-
-        let favorites = JSON.parse(localStorage.getItem("favorites")) || { stores: [] };
-
-        const index = favorites.stores.indexOf(gameTitle);
-        if (index === -1) {
-            favorites.stores.push(gameTitle);
-            event.target.innerText = "★"; 
-            event.target.classList.add("favorited"); 
-            console.log(`"${gameTitle}" ajouté aux favoris !`);
-        } else {
-            favorites.stores.splice(index, 1);
-            event.target.innerText = "☆"; 
-            event.target.classList.remove("favorited"); 
-            console.log(`"${gameTitle}" supprimé des favoris.`);
-        }
-
-        localStorage.setItem("favorites", JSON.stringify(favorites));
-    }
-});
 
 
 
