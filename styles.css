@@ -253,7 +253,7 @@ h1 {
 }
 
 .game-card:hover {
-  border : solid grey;
+  border : solid #295c9e;
 }
 
 .game-thumbnail {
