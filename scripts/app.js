@@ -34,13 +34,26 @@ function changePage(page) {
     // Crée et affiche les cartes de jeux
     gamesToShow.forEach(game => {
         const gameCard = document.createElement('div');
-        gameCard.classList.add('game-card');
-        gameCard.innerHTML = `
-            <img src="${game.thumbnail}" alt="${game.title}" class="game-thumbnail">
-            <h3 class="game-title">${game.title}</h3>
-            <p class="game-genre">${game.genre}</p>
-        `;
-        resultsContainer.appendChild(gameCard);
+gameCard.classList.add('game-card');
+
+// Crée un élément <a> qui redirige vers le lien du jeu
+const link = document.createElement('a');
+link.href = game.game_url; // Assure-toi que game_url contient l'URL du jeu
+link.target = "_blank"; // Ouvre le lien dans un nouvel onglet
+
+// Ajoute le contenu de la carte à l'intérieur du lien
+link.innerHTML = `
+    <img src="${game.thumbnail}" alt="${game.title}" class="game-thumbnail">
+    <h3 class="game-title">${game.title}</h3>
+    <p class="game-genre">${game.genre}</p>
+`;
+
+// Ajoute le lien contenant la carte de jeu à la div principale de la carte
+gameCard.appendChild(link);
+
+// Ajoute la carte à la section de résultats
+resultsContainer.appendChild(gameCard);
+
     });
 
     // Crée le conteneur de pagination

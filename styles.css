@@ -235,3 +235,14 @@ button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
 }
+
+
+.game-card a {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.game-card a:hover {
+  opacity: 0.8; /* Optionnel, pour un effet au survol */
+}
