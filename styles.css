@@ -4,9 +4,9 @@
 /* Définition des principales couleurs */
 :root {
   --text-color: #fafafa; /* (Texte presque blanc) */
-  --background: #34495e; /* (Fond bleu foncé) */
+  --background: #09122C; /* (Fond bleu foncé) */
   --background-button: #bebebe;
-  --main-green: rgb(26, 188, 156);
+  --main-green: #872341;
   --active-green: rgb(20, 156, 128);
   --almost-black: #2d2d2d;
 }
@@ -34,7 +34,7 @@ h1 {
   text-align: center;
   font-variant: small-caps;
   font-size: 2.5em;
-  color: var(--main-green);
+  color: #BE3144;
 }
 
 #explication {
@@ -218,7 +218,7 @@ h1 {
 
 /* When favorited: filled star */
 .addToFavBtn.favorited {
-  color: gold;
+  color: #BE3144;
 }
 
 .game-results {
@@ -246,9 +246,9 @@ h1 {
   align-items: center;
   position: relative;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #2043ac;
   border-radius: 8px;
-  background: #1b2631;
+  background: #112150;
   
 }
 
@@ -323,7 +323,7 @@ button:disabled {
 }
 
 .addToFavBtn:hover {
-  color : gold;
+  color : #872341;
 }
 
 
