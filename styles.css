@@ -176,12 +176,39 @@ h1 {
   height: 5vh;
 }
 
+.display-favs {
+  background-color: transparent;  
+  color: #ffcc00;               
+  font-size: 16px;            
+  cursor: pointer;           
+  display: flex;              
+  align-items: center;        
+  justify-content: center;    
+  gap: 10px;                  
+  font-weight: bold;          
+  transition: all 0.3s ease;  
+}
+
+.display-favs:hover {
+  transform: scale(1.05);      /* Slight scale effect for hover */
+}
+
+.display-favs .star {
+  font-size: 18px;             /* Icon size for the star */
+}
+
+
 .addToFavBtn {
   background: none;
   border: none;
   font-size: 24px;
   cursor: pointer;
   transition: color 0.3s ease;
+}
+
+.addToFavBtn:hover {
+  transform: scale(1.05);      /* Slight scale effect for hover */
+  transition: all 0.3s ease; 
 }
 
 /* Default style: empty star */
