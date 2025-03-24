@@ -71,13 +71,22 @@ async function displayPopularGames() {
 
 function displayFavoriteGames() {
     let favorites = JSON.parse(localStorage.getItem("favorites")) || { stores: [] };
-    const favoriteTitles = new Set(favorites.stores);
 
+    if (favorites.stores.length === 0) {
+        resultsContainer.innerHTML = "<p class='no-favorites'>Vous n'avez aucun jeu favori pour le moment.</p>";
+        showingFavorites = true; // Ensure the toggle still works
+        return;
+    }
+
+    const favoriteTitles = new Set(favorites.stores);
     const favoriteGames = games.filter(game => favoriteTitles.has(game.title));
-    games = favoriteGames; // Update the displayed list
+
+    games = favoriteGames;
     showingFavorites = true;
     changePage(1);
 }
+
+
 
 // Toggle between all games and favorites
 favsButton.addEventListener("click", () => {
@@ -89,6 +98,7 @@ favsButton.addEventListener("click", () => {
         favsButton.innerText = "☆ Retour aux jeux";
     }
 });
+
 
 // Toggle favorite status
 function toggleFavorite(gameTitle, favButton) {
