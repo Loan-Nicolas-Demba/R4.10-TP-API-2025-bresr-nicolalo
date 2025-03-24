@@ -12,11 +12,10 @@
       <h1>Recherche de free to play</h1>
 
       <p id="explication">
-        Cette page permet de rechercher des offres d'emploi via l'API publique
-        de <a href="https://www.indeed.fr/" target="_blank">indeed.fr</a>.<br />
-        Saisir le nom d'une ville, d'un poste, ... pour rechercher les postes
-        correspondants, et enregistrer vos recherches favorites pour les
-        retrouver facilement.
+        Cette page permet de découvrir des jeux gratuits via l'API publique de
+        <a href="https://www.freetogame.com/api-doc" target="_blank">FreeToGame</a>.<br />
+        Explorez les jeux triés par popularité et filtrez-les par tags pour trouver
+        ceux qui vous intéressent.
       </p>
     </header>
     <hr />
@@ -24,38 +23,7 @@
     <main id="conteneur">
       <!-- Section de recherche (avec résultats) -->
       <section id="section-recherche">
-        <div id="bloc-recherche">
-          <!-- Champ de recherche -->
-          <input type="text" placeholder="Que cherchez-vous ?" />
-
-          <!-- Boutons -->
-          <button
-            id="btn-lancer-recherche"
-            type="button"
-            class="btn_clicable"
-            title="Lancer la recherche"
-          >
-            <!-- Icone Loupe (provenant de flaticon.com) -->
-            <img src="images/loupe.svg" alt="Loupe pour recherche" width="22" />
-          </button>
-
-          <button
-            id="btn-favoris"
-            type="button"
-            disabled
-            title="Ajouter la recherche aux favoris"
-          >
-            <!-- Icone étoile vide
-							(qui indique que la recherche ne fait pas partie des favoris) -->
-            <img src="images/etoile-vide.svg" alt="Etoile vide" width="22" />
-
-            <!-- Icone étoile pleine
-								(qui indique que la recherche fait partie des favoris) -->
-            <!-- <img src="images/etoile-pleine.svg" alt="Etoile pleine" width="22" > -->
-
-            <!-- (Les 2 icones d'étoile provenant de flaticon.com) -->
-          </button>
-        </div>
+        
 
         <!-- Résultats de recherche -->
         <div id="bloc-gif-attente">
@@ -65,11 +33,8 @@
             width="50"
           />
         </div>
-        <div id="bloc-resultats">
-          <p class="res">Résultat 1 ...</p>
-          <p class="res">Résultat 2 ...</p>
-          <p class="res">Résultat 3 ...</p>
-          <p class="info-vide">(Aucun résultat trouvé)</p>
+        <div id="bloc-resultats" class="game-results">
+          <!-- Les jeux populaires seront affichés ici -->
         </div>
       </section>
 
@@ -78,42 +43,181 @@
 
       <!-- Section des recherches favorites -->
       <section id="section-favoris">
-        <h2>Recherches favorites</h2>
-        <p>
-          Cliquer sur une recherche favorite ci-dessus pour relancer celle-ci :
-        </p>
-        <ul id="liste-favoris">
-          <li>
-            <span title="Cliquer pour relancer la recherche">Grenoble</span>
-            <img
-              src="images/croix.svg"
-              alt="Icone pour supprimer le favori"
-              width="15"
-              title="Cliquer pour supprimer le favori"
-            />
-          </li>
-          <li>
-            <span title="Cliquer pour relancer la recherche">Lyon</span>
-            <img
-              src="images/croix.svg"
-              alt="Icone pour supprimer le favori"
-              width="15"
-              title="Cliquer pour supprimer le favori"
-            />
-          </li>
-          <li>
-            <span title="Cliquer pour relancer la recherhe.">Web</span>
-            <img
-              src="images/croix.svg"
-              alt="Icone pour supprimer le favori"
-              width="15"
-              title="Cliquer pour supprimer le favori"
-            />
-          </li>
-        </ul>
-        <p class="info-vide">(Aucune recherche favorite)</p>
+        <div>
+          <select class="sorted-by">
+            <option selected="">Sorted By:</option>
+            <option value="1">Relevance</option>
+            <option value="4">Popularity</option>
+            <option value="2">Release Date</option>
+            <option value="3">Alphabetical</option>
+          </select>
+
+          <br/>
+          <br/>
+          <br/>
+
+          <fieldset>
+            <legend>Platform</legend>
+            <div>
+              <input type="checkbox" id="PC" name="PC" />
+              <label for="PC">PC</label>
+            </div>
+            <div>
+              <input type="checkbox" id="browser" name="browser" />
+              <label for="browser">browser</label>
+            </div>
+          </fieldset>
+          
+          <fieldset>
+            <legend>Genre</legend>
+            <div>
+              <input type="checkbox" id="MMO" name="MMO" />
+              <label for="MMO">MMO</label>
+            </div>
+            <div>
+              <input type="checkbox" id="MMORPG" name="MMORPG" />
+              <label for="MMORPG">MMORPG</label>
+            </div>
+            <div>
+              <input type="checkbox" id="Shooter" name="Shooter" />
+              <label for="Shooter">Shooter</label>
+            </div>
+            <div>
+              <input type="checkbox" id="Strategy" name="Strategy" />
+              <label for="Strategy">Strategy</label>
+            </div>
+            <div>
+              <input type="checkbox" id="Moba" name="Moba" />
+              <label for="Moba">Moba</label>
+            </div>
+            <div>
+              <input type="checkbox" id="BattleRoyale" name="BattleRoyale" />
+              <label for="BattleRoyale">Battle Royale</label>
+            </div>
+            <div>
+              <input type="checkbox" id="Card" name="Card" />
+              <label for="Card">Card</label>
+            </div>
+            <div>
+              <input type="checkbox" id="Racing" name="Racing" />
+              <label for="Racing">Racing</label>
+            </div>
+            <div>
+              <input type="checkbox" id="Sports" name="Sports" />
+              <label for="Sports">Sports</label>
+            </div>
+            <div>
+              <input type="checkbox" id="Social" name="Social" />
+              <label for="Social">Social</label>
+            </div>
+            <div>
+              <input type="checkbox" id="Fighting" name="Fighting" />
+              <label for="Fighting">Fighting</label>
+            </div>
+          </fieldset>
+          
+          <fieldset>
+            <legend>Tags</legend>
+            <div>
+              <input type="checkbox" id="MMOFPS" name="MMOFPS" />
+              <label for="MMOFPS">MMOFPS</label>
+            </div>
+            <div>
+              <input type="checkbox" id="Sandbox" name="Sandbox" />
+              <label for="Sandbox">Sandbox</label>
+            </div>
+            <div>
+              <input type="checkbox" id="OpenWorld" name="OpenWorld" />
+              <label for="OpenWorld">Open World</label>
+            </div>
+            <div>
+              <input type="checkbox" id="Survival" name="Survival" />
+              <label for="Survival">Survival</label>
+            </div>
+            <div>
+              <input type="checkbox" id="ActionRPG" name="ActionRPG" />
+              <label for="ActionRPG">Action RPG</label>
+            </div>
+            <div>
+              <input type="checkbox" id="MMORTS" name="MMORTS" />
+              <label for="MMORTS">MMORTS</label>
+            </div>
+            <div>
+              <input type="checkbox" id="Pixel" name="Pixel" />
+              <label for="Pixel">Pixel</label>
+            </div>
+            <div>
+              <input type="checkbox" id="Voxel" name="Voxel" />
+              <label for="Voxel">Voxel</label>
+            </div>
+            <div>
+              <input type="checkbox" id="MMOTPS" name="MMOTPS" />
+              <label for="MMOTPS">MMOTPS</label>
+            </div>
+            <div>
+              <input type="checkbox" id="Zombie" name="Zombie" />
+              <label for="Zombie">Zombie</label>
+            </div>
+            <div>
+              <input type="checkbox" id="FirstPerson" name="FirstPerson" />
+              <label for="FirstPerson">First-Person</label>
+            </div>
+            <div>
+              <input type="checkbox" id="TopDown" name="TopDown" />
+              <label for="TopDown">Top-Down</label>
+            </div>
+            <div>
+              <input type="checkbox" id="Tank" name="Tank" />
+              <label for="Tank">Tank</label>
+            </div>
+            <div>
+              <input type="checkbox" id="Space" name="Space" />
+              <label for="Space">Space</label>
+            </div>
+            <div>
+              <input type="checkbox" id="Sailing" name="Sailing" />
+              <label for="Sailing">Sailing</label>
+            </div>
+            <div>
+              <input type="checkbox" id="SideScroller" name="SideScroller" />
+              <label for="SideScroller">Side Scroller</label>
+            </div>
+            <div>
+              <input type="checkbox" id="Superhero" name="Superhero" />
+              <label for="Superhero">Superhero</label>
+            </div>
+            <div>
+              <input type="checkbox" id="Permadeath" name="Permadeath" />
+              <label for="Permadeath">Permadeath</label>
+            </div>
+            <div>
+              <input type="checkbox" id="Action" name="Action" />
+              <label for="Action">Action</label>
+            </div>
+            <div>
+              <input type="checkbox" id="MartialArts" name="MartialArts" />
+              <label for="MartialArts">Martial Arts</label>
+            </div>
+            <div>
+              <input type="checkbox" id="Flight" name="Flight" />
+              <label for="Flight">Flight</label>
+            </div>
+            <div>
+              <input type="checkbox" id="LowSpec" name="LowSpec" />
+              <label for="LowSpec">Low-Spec</label>
+            </div>
+          </fieldset>
+          
+
+
+                                                                                                                    
+
+                                                                                                                    
+
+
+
       </section>
     </main>
   </body>
-  <script src="js/app.js"></script>
+  <script type="module" src="./scripts/app.js"></script>
 </html>
