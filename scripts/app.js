@@ -46,10 +46,7 @@ genreRadios.forEach(radio => {
 const selectElement = document.querySelector('.sorted-by');
 
 // Écouteur d'événements pour détecter le changement de sélection
-selectElement.addEventListener('change', function () {
-    // Appel de la fonction pour récupérer la valeur sélectionnée
-    const selectedValue = getSelectedSort();
-});
+selectElement.addEventListener('change', displayPopularGames);
 
 // Fonction pour récupérer la valeur sélectionnée
 function getSelectedSort() {
@@ -64,7 +61,8 @@ function getSelectedSort() {
 async function displayPopularGames() {
     const selectedPlatform = getSelectedPlatform();
     const selectedGenre = getSelectedGenre();
-    games = await fetchFilteredGames(selectedPlatform, selectedGenre); // Récupère tous les jeux
+    const selectedSort = getSelectedSort();
+    games = await fetchFilteredGames(selectedPlatform, selectedGenre, selectedSort); // Récupère tous les jeux
     changePage(1); // Affiche la première page
 }
 
@@ -83,7 +81,7 @@ function changePage(page) {
     // Crée et affiche les cartes de jeux
     gamesToShow.forEach(game => {
         const gameCard = document.createElement('div');
-gameCard.classList.add('game-card');
+    gameCard.classList.add('game-card');
 
 // Crée un élément <a> qui redirige vers le lien du jeu
 const link = document.createElement('a');

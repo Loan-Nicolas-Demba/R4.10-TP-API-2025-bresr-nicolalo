@@ -14,13 +14,38 @@ export async function fetchPopularGames() {
     }
 }
 
+// Fonction pour récupérer les jeux populaires
+export async function fetchReleaseGames() {
+    try {
+        const response = await fetch(`${PROXY_URL}${encodeURIComponent(`${API_URL}/games?sort-by=release-date`)}`);
+        if (!response.ok) throw new Error("Erreur API");
+        const data = await response.json(); 
+        return JSON.parse(data.contents);
+    } catch (error) {
+        console.error("Erreur API:", error);
+        return [];
+    }
+}
+
+// Fonction pour récupérer les jeux populaires
+export async function fetchAlphabeticalGames() {
+    try {
+        const response = await fetch(`${PROXY_URL}${encodeURIComponent(`${API_URL}/games?sort-by=alphabetical`)}`);
+        if (!response.ok) throw new Error("Erreur API");
+        const data = await response.json(); 
+        return JSON.parse(data.contents);
+    } catch (error) {
+        console.error("Erreur API:", error);
+        return [];
+    }
+}
 
 
 // Fonction pour faire la requête à l'API avec les filtres
-export async function fetchFilteredGames(platform = null, genre = null) {
+export async function fetchFilteredGames(platform = null, genre = null, sorted = "popularity") {
     try {
         // Construire l'URL de base avec le tri par popularité
-        let url = `${API_URL}/games?`;
+        let url = `${API_URL}/games?sort-by=${sorted}`;
 
         // Ajouter le filtre de plateforme si spécifié
         if (platform) {
