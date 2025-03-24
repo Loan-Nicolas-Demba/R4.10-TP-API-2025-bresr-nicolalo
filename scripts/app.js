@@ -41,6 +41,26 @@ genreRadios.forEach(radio => {
     radio.addEventListener('change', displayPopularGames);
 });
 
+
+// Ajout d'un listener sur le select
+const selectElement = document.querySelector('.sorted-by');
+
+// Écouteur d'événements pour détecter le changement de sélection
+selectElement.addEventListener('change', function () {
+    // Appel de la fonction pour récupérer la valeur sélectionnée
+    const selectedValue = getSelectedSort();
+});
+
+// Fonction pour récupérer la valeur sélectionnée
+function getSelectedSort() {
+    return selectElement.value;
+}
+
+
+
+
+
+
 async function displayPopularGames() {
     const selectedPlatform = getSelectedPlatform();
     const selectedGenre = getSelectedGenre();
