@@ -21,6 +21,12 @@ nextButton.addEventListener('click', () => changePage(currentPage + 1));
 // Sélection des boutons radio
 const platformRadios = document.querySelectorAll('fieldset:first-of-type input[type="radio"]');
 const genreRadios = document.querySelectorAll('fieldset:nth-of-type(2) input[type="radio"]');
+const tagCheckboxes = document.querySelectorAll('fieldset:nth-of-type(3) input[type="checkbox"]');
+
+function getSelectedTags() {
+    return Array.from(document.querySelectorAll('fieldset:nth-of-type(3) input[type="checkbox"]:checked'))
+        .map(checkbox => checkbox.id);
+}
 
 // Fonctions pour récupérer les valeurs sélectionnées
 function getSelectedPlatform() {
@@ -41,6 +47,12 @@ platformRadios.forEach(radio => {
 // Ajouter des listeners sur les boutons radio de genre
 genreRadios.forEach(radio => {
     radio.addEventListener('change', displayPopularGames);
+});
+
+// Ajouter des listeners sur les checkboxes de tags
+
+tagCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', displayPopularGames);
 });
 
 
@@ -64,7 +76,9 @@ async function displayPopularGames() {
     const selectedPlatform = getSelectedPlatform();
     const selectedGenre = getSelectedGenre();
     const selectedSort = getSelectedSort();
-    games = await fetchFilteredGames(selectedPlatform, selectedGenre, selectedSort); // Récupère tous les jeux
+    const selectedTags = getSelectedTags();
+
+    games = await fetchFilteredGames(selectedPlatform, selectedGenre, selectedTags, selectedSort); // Récupère tous les jeux
     showingFavorites = false;
     changePage(1); // Affiche la première page
 }
