@@ -1,4 +1,6 @@
 import { fetchPopularGames } from './api.js';
+import { fetchFilteredGames } from './api.js';
+
 
 const resultsContainer = document.getElementById('bloc-resultats');
 const prevButton = document.createElement('button');
@@ -14,8 +16,35 @@ nextButton.innerText = "Suivant";
 prevButton.addEventListener('click', () => changePage(currentPage - 1));
 nextButton.addEventListener('click', () => changePage(currentPage + 1));
 
+// Sélection des boutons radio
+const platformRadios = document.querySelectorAll('fieldset:first-of-type input[type="radio"]');
+const genreRadios = document.querySelectorAll('fieldset:nth-of-type(2) input[type="radio"]');
+
+// Fonctions pour récupérer les valeurs sélectionnées
+function getSelectedPlatform() {
+    const selectedPlatform = document.querySelector('fieldset:first-of-type input[type="radio"]:checked').id;
+    return selectedPlatform === "deux" ? null : selectedPlatform.toLowerCase(); // "deux" signifie aucune plateforme spécifique
+}
+
+function getSelectedGenre() {
+    const selectedGenre = document.querySelector('fieldset:nth-of-type(2) input[type="radio"]:checked').id;
+    return selectedGenre === "tous" ? null : selectedGenre.toLowerCase(); // "tous" signifie aucun genre spécifique
+}
+
+// Ajouter des listeners sur les boutons radio de plateforme
+platformRadios.forEach(radio => {
+    radio.addEventListener('change', displayPopularGames);
+});
+
+// Ajouter des listeners sur les boutons radio de genre
+genreRadios.forEach(radio => {
+    radio.addEventListener('change', displayPopularGames);
+});
+
 async function displayPopularGames() {
-    games = await fetchPopularGames(); // Récupère tous les jeux
+    const selectedPlatform = getSelectedPlatform();
+    const selectedGenre = getSelectedGenre();
+    games = await fetchFilteredGames(selectedPlatform, selectedGenre); // Récupère tous les jeux
     changePage(1); // Affiche la première page
 }
 

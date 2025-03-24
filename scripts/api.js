@@ -14,68 +14,34 @@ export async function fetchPopularGames() {
     }
 }
 
-// Fonction pour récupérer les jeux avec un terme de recherche
-export async function fetchGames(searchTerm) {
-    try {
-        const response = await fetch(`${API_URL}/games?platform=pc`);
-        if (!response.ok) throw new Error("Erreur API");
 
-        const games = await response.json();
-        return games.filter(game => game.title.toLowerCase().includes(searchTerm.toLowerCase()));
+
+// Fonction pour faire la requête à l'API avec les filtres
+export async function fetchFilteredGames(platform = null, genre = null) {
+    try {
+        // Construire l'URL de base avec le tri par popularité
+        let url = `${API_URL}/games?`;
+
+        // Ajouter le filtre de plateforme si spécifié
+        if (platform) {
+            url += `&platform=${encodeURIComponent(platform)}`;
+        }
+
+        // Ajouter le filtre de genre si spécifié
+        if (genre) {
+            url += `&category=${encodeURIComponent(genre)}`;
+        }
+
+
+        console.log("URL de la requête :", url); // Affichez l'URL pour vérifier
+
+        const response = await fetch(`${PROXY_URL}${encodeURIComponent(url)}`);
+        if (!response.ok) throw new Error("Erreur API");
+        const data = await response.json(); 
+        return JSON.parse(data.contents);
     } catch (error) {
         console.error("Erreur API:", error);
         return [];
     }
-}
-
-// Fonction pour récupérer les jeux par catégorie
-export async function fetchGamesByCategory(category) {
-    try {
-        const response = await fetch(`${API_URL}/games?category=${category}`);
-        if (!response.ok) throw new Error("Erreur API");
-
-        return await response.json();
-    } catch (error) {
-        console.error("Erreur API:", error);
-        return [];
-    }
-}
-
-// Fonction pour récupérer les jeux par plateforme
-export async function fetchGamesByPlatform(platform) {
-    try {
-        const response = await fetch(`${API_URL}/games?platform=${platform}`);
-        if (!response.ok) throw new Error("Erreur API");
-
-        return await response.json();
-    } catch (error) {
-        console.error("Erreur API:", error);
-        return [];
-    }
-}
-
-// Fonction pour récupérer les jeux par tags
-export async function fetchGamesByTags(tags, platform = 'pc', sort = 'relevance') {
-    try {
-        const response = await fetch(`${API_URL}/filter?tag=${tags}&platform=${platform}&sort-by=${sort}`);
-        if (!response.ok) throw new Error("Erreur API");
-
-        return await response.json();
-    } catch (error) {
-        console.error("Erreur API:", error);
-        return [];
-    }
-}
-
-// Fonction pour récupérer les détails d'un jeu par son ID
-export async function fetchGameById(gameId) {
-    try {
-        const response = await fetch(`${API_URL}/game?id=${gameId}`);
-        if (!response.ok) throw new Error("Erreur API");
-
-        return await response.json();
-    } catch (error) {
-        console.error("Erreur API:", error);
-        return null;
-    }
+    
 }

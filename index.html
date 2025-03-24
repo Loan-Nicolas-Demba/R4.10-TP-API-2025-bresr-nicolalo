@@ -46,9 +46,9 @@
         <div>
           <select class="sorted-by">
             <option selected="">Trier par:</option>
-            <option value="4">Popularité</option>
-            <option value="2">Date de Sortie</option>
-            <option value="3">Ordre alphabetique</option>
+            <option value="popularity">Popularité</option>
+            <option value="release-date">Date de Sortie</option>
+            <option value="alphabetical">Ordre alphabetique</option>
           </select>
 
           <br/>
@@ -58,163 +58,74 @@
           <fieldset>
             <legend>Platforme</legend>
             <div>
-              <input type="checkbox" id="PC" name="PC" />
+              <input type="radio" id="PC" name="platforme" />
               <label for="PC">PC</label>
             </div>
             <div>
-              <input type="checkbox" id="browser" name="browser" />
+              <input type="radio" id="browser" name="platforme" />
               <label for="browser">Navigateur</label>
+            </div>
+            <div>
+              <input type="radio" id="deux" name="platforme" checked/>
+              <label for="deux">Les Deux</label>
             </div>
           </fieldset>
           
           <fieldset>
             <legend>Genre</legend>
             <div>
-              <input type="checkbox" id="MMO" name="MMO" />
+              <input type="radio" id="MMO" name="genre" />
               <label for="MMO">MMO</label>
             </div>
             <div>
-              <input type="checkbox" id="MMORPG" name="MMORPG" />
+              <input type="radio" id="MMORPG" name="genre" />
               <label for="MMORPG">MMORPG</label>
             </div>
             <div>
-              <input type="checkbox" id="Shooter" name="Shooter" />
+              <input type="radio" id="Shooter" name="genre" />
               <label for="Shooter">Shooter</label>
             </div>
             <div>
-              <input type="checkbox" id="Strategy" name="Strategy" />
+              <input type="radio" id="Strategy" name="genre" />
               <label for="Strategy">Strategie</label>
             </div>
             <div>
-              <input type="checkbox" id="Moba" name="Moba" />
+              <input type="radio" id="Moba" name="genre" />
               <label for="Moba">Moba</label>
             </div>
             <div>
-              <input type="checkbox" id="BattleRoyale" name="BattleRoyale" />
+              <input type="radio" id="BattleRoyale" name="genre" />
               <label for="BattleRoyale">Battle Royale</label>
             </div>
             <div>
-              <input type="checkbox" id="Card" name="Card" />
+              <input type="radio" id="Card" name="genre" />
               <label for="Card">Cartes</label>
             </div>
             <div>
-              <input type="checkbox" id="Racing" name="Racing" />
+              <input type="radio" id="Racing" name="genre" />
               <label for="Racing">Course</label>
             </div>
             <div>
-              <input type="checkbox" id="Sports" name="Sports" />
+              <input type="radio" id="Sports" name="genre" />
               <label for="Sports">Sports</label>
             </div>
             <div>
-              <input type="checkbox" id="Social" name="Social" />
+              <input type="radio" id="Social" name="genre" />
               <label for="Social">Social</label>
             </div>
             <div>
-              <input type="checkbox" id="Fighting" name="Fighting" />
+              <input type="radio" id="Fighting" name="genre" />
               <label for="Fighting">Combat</label>
             </div>
-          </fieldset>
-          
-          <fieldset>
-            <legend>Tags</legend>
             <div>
-              <input type="checkbox" id="MMOFPS" name="MMOFPS" />
-              <label for="MMOFPS">MMOFPS</label>
-            </div>
-            <div>
-              <input type="checkbox" id="Sandbox" name="Sandbox" />
-              <label for="Sandbox">Sandbox</label>
-            </div>
-            <div>
-              <input type="checkbox" id="OpenWorld" name="OpenWorld" />
-              <label for="OpenWorld">Open World</label>
-            </div>
-            <div>
-              <input type="checkbox" id="Survival" name="Survival" />
-              <label for="Survival">Survival</label>
-            </div>
-            <div>
-              <input type="checkbox" id="ActionRPG" name="ActionRPG" />
-              <label for="ActionRPG">Action RPG</label>
-            </div>
-            <div>
-              <input type="checkbox" id="MMORTS" name="MMORTS" />
-              <label for="MMORTS">MMORTS</label>
-            </div>
-            <div>
-              <input type="checkbox" id="Pixel" name="Pixel" />
-              <label for="Pixel">Pixel</label>
-            </div>
-            <div>
-              <input type="checkbox" id="Voxel" name="Voxel" />
-              <label for="Voxel">Voxel</label>
-            </div>
-            <div>
-              <input type="checkbox" id="MMOTPS" name="MMOTPS" />
-              <label for="MMOTPS">MMOTPS</label>
-            </div>
-            <div>
-              <input type="checkbox" id="Zombie" name="Zombie" />
-              <label for="Zombie">Zombie</label>
-            </div>
-            <div>
-              <input type="checkbox" id="FirstPerson" name="FirstPerson" />
-              <label for="FirstPerson">First-Person</label>
-            </div>
-            <div>
-              <input type="checkbox" id="TopDown" name="TopDown" />
-              <label for="TopDown">Top-Down</label>
-            </div>
-            <div>
-              <input type="checkbox" id="Tank" name="Tank" />
-              <label for="Tank">Tank</label>
-            </div>
-            <div>
-              <input type="checkbox" id="Space" name="Space" />
-              <label for="Space">Space</label>
-            </div>
-            <div>
-              <input type="checkbox" id="Sailing" name="Sailing" />
-              <label for="Sailing">Sailing</label>
-            </div>
-            <div>
-              <input type="checkbox" id="SideScroller" name="SideScroller" />
-              <label for="SideScroller">Side Scroller</label>
-            </div>
-            <div>
-              <input type="checkbox" id="Superhero" name="Superhero" />
-              <label for="Superhero">Superhero</label>
-            </div>
-            <div>
-              <input type="checkbox" id="Permadeath" name="Permadeath" />
-              <label for="Permadeath">Permadeath</label>
-            </div>
-            <div>
-              <input type="checkbox" id="Action" name="Action" />
-              <label for="Action">Action</label>
-            </div>
-            <div>
-              <input type="checkbox" id="MartialArts" name="MartialArts" />
-              <label for="MartialArts">Martial Arts</label>
-            </div>
-            <div>
-              <input type="checkbox" id="Flight" name="Flight" />
-              <label for="Flight">Flight</label>
-            </div>
-            <div>
-              <input type="checkbox" id="LowSpec" name="LowSpec" />
-              <label for="LowSpec">Low-Spec</label>
+              <input type="radio" id="tous" name="genre" checked/>
+              <label for="tous">Tous</label>
             </div>
           </fieldset>
+
           
-
-
-                                                                                                                    
-
-                                                                                                                    
-
-
-
+          
+          
       </section>
     </main>
   </body>
