@@ -229,12 +229,31 @@ h1 {
 }
 
 .game-card {
+  display: flex;
+  flex-direction: column;
+
   width: 200px;
   padding: 10px;
   border: 1px solid black;
   border-radius: 8px;
   background-color: #1b2631;
   text-align: center;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+
+}
+
+.game-card {
+  align-items: center;
+  position: relative;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #1b2631;
+  
+}
+
+.game-card:hover {
+  border : solid grey;
 }
 
 .game-thumbnail {
@@ -288,3 +307,24 @@ button:disabled {
 .game-card a:hover {
   opacity: 0.8; /* Optionnel, pour un effet au survol */
 }
+
+
+
+
+.addToFavBtn {
+    position: absolute;
+    bottom: 10px; /* Place le bouton en bas */
+    left: 75%;
+    transform: translateY(5%); /* Centre horizontalement */
+    background: transparent;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.addToFavBtn:hover {
+  color : gold;
+}
+
+
+
