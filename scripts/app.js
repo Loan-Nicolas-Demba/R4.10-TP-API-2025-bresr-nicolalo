@@ -18,24 +18,25 @@ nextButton.innerText = "Suivant";
 prevButton.addEventListener('click', () => changePage(currentPage - 1));
 nextButton.addEventListener('click', () => changePage(currentPage + 1));
 
+const fieldsets = document.querySelectorAll("fieldset");
 // Sélection des boutons radio
-const platformRadios = document.querySelectorAll('fieldset:first-of-type input[type="radio"]');
-const genreRadios = document.querySelectorAll('fieldset:nth-of-type(2) input[type="radio"]');
-const tagCheckboxes = document.querySelectorAll('fieldset:nth-of-type(3) input[type="checkbox"]');
+const platformRadios = document.querySelectorAll('fieldset:nth-of-type(2) input[type="radio"]');
+const genreRadios = document.querySelectorAll('fieldset:nth-of-type(3) input[type="radio"]');
+const tagCheckboxes = document.querySelectorAll('fieldset:nth-of-type(4) input[type="checkbox"]');
 
 function getSelectedTags() {
-    return Array.from(document.querySelectorAll('fieldset:nth-of-type(3) input[type="checkbox"]:checked'))
+    return Array.from(document.querySelectorAll('fieldset:nth-of-type(4) input[type="checkbox"]:checked'))
         .map(checkbox => checkbox.id);
 }
 
 // Fonctions pour récupérer les valeurs sélectionnées
 function getSelectedPlatform() {
-    const selectedPlatform = document.querySelector('fieldset:first-of-type input[type="radio"]:checked').id;
+    const selectedPlatform = document.querySelector('fieldset:nth-of-type(2) input[type="radio"]:checked').id;
     return selectedPlatform === "deux" ? null : selectedPlatform.toLowerCase(); // "deux" signifie aucune plateforme spécifique
 }
 
 function getSelectedGenre() {
-    const selectedGenre = document.querySelector('fieldset:nth-of-type(2) input[type="radio"]:checked').id;
+    const selectedGenre = document.querySelector('fieldset:nth-of-type(3) input[type="radio"]:checked').id;
     return selectedGenre === "tous" ? null : selectedGenre.toLowerCase(); // "tous" signifie aucun genre spécifique
 }
 
@@ -78,9 +79,25 @@ async function displayPopularGames() {
     const selectedSort = getSelectedSort();
     const selectedTags = getSelectedTags();
 
-    games = await fetchFilteredGames(selectedPlatform, selectedGenre, selectedTags, selectedSort); // Récupère tous les jeux
+    console.log("Fetching games with filters:", selectedPlatform, selectedGenre, selectedSort, selectedTags);
+    
+    games = await fetchFilteredGames(selectedPlatform, selectedGenre, selectedTags, selectedSort); 
+
+    // Ensure games is always an array
+    if (!Array.isArray(games)) {
+        console.error("Error: games is not an array!", games);
+        games = []; // Default to an empty array
+    }
+
     showingFavorites = false;
-    changePage(1); // Affiche la première page
+
+    if (games.length === 0) {
+        resultsContainer.innerHTML = "<p class='no-games'>Aucun Jeu correspondant à la recherche.</p>";
+        return;
+    }
+    
+    console.log("Games fetched successfully:", games);
+    changePage(1); // Display the first page
 }
 
 function displayFavoriteGames() {
@@ -88,7 +105,7 @@ function displayFavoriteGames() {
 
     if (favorites.stores.length === 0) {
         resultsContainer.innerHTML = "<p class='no-favorites'>Vous n'avez aucun jeu favori pour le moment.</p>";
-        showingFavorites = true; // Ensure the toggle still works
+        showingFavorites = true; 
         return;
     }
 
@@ -105,13 +122,26 @@ function displayFavoriteGames() {
 // Toggle between all games and favorites
 favsButton.addEventListener("click", () => {
     if (showingFavorites) {
+        // Show fieldsets and re-enable filters when switching back
+        fieldsets.forEach(fieldset => {
+            fieldset.style.display = "block"; // Show fieldsets
+            fieldset.disabled = false; // Enable filters
+        });
+
         displayPopularGames();
         favsButton.innerText = "★ Voir mes favoris";
     } else {
+        // Hide and disable fieldsets when viewing favorites
+        fieldsets.forEach(fieldset => {
+            fieldset.style.display = "none"; // Hide fieldsets
+            fieldset.disabled = true; // Disable filters
+        });
+
         displayFavoriteGames();
         favsButton.innerText = "☆ Retour aux jeux";
     }
 });
+
 
 
 // Toggle favorite status
